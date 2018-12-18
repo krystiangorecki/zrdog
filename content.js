@@ -46,7 +46,7 @@ function executeRdoGDouble() {
 }
 
 // na stronie o dodaje linki do g
-function executeOdlotyGDouble() {
+function executeOdoGDouble() {
 	// wyszukuję element z numerem telefonu
 	var phoneElement = document.querySelector('h3.contactNumber');
 	// pobieram z niego sam numer
@@ -96,7 +96,7 @@ function executeRdoGSingle() {
 }
 
 // na stronie o dodaje linki do g
-function executeOdlotyGSingle() {
+function executeOdoGSingle() {
 	// wyszukuję element z numerem telefonu
 	var phoneElement = document.querySelector('h3.contactNumber');
 	// pobieram z niego sam numer
@@ -134,7 +134,7 @@ function executeRdoR() {
 }
 
 // na stronie o dodaje linki do r
-function executeOdlotyR() {
+function executeOdoR() {
 	var phoneElement = document.querySelector('h3.contactNumber');
 	var phone = phoneElement.textContent.trim();
 	//alert(phone);
@@ -170,17 +170,16 @@ function continueExecutionWithOptionsLoaded(openInNewTab, openTwoAtOnce) {
 		} else {
 			executeRdoGDouble();
 		}
-
 	} else {
+		// jestem na o
 		// dodaj link do r
-		executeOdlotyR();
+		executeOdoR();
 		// dodaj link do g
 		if (openInNewTab && openTwoAtOnce) {
-			executeOdlotyGSingle();
+			executeOdoGSingle();
 		} else {
-			executeOdlotyGDouble();
+			executeOdoGDouble();
 		}
-
 	}
 	applyDynamicTarget();
 }
