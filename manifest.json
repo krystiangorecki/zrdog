@@ -21,7 +21,8 @@
 		"*://www.odloty.pl/en/announcements/*",
 		"*://odloty.pl/pl/ogloszenia-towarzyskie/*",
 		"*://odloty.pl/de/ogloszenia-towarzyskie/*",
-		"*://odloty.pl/en/announcements/*"
+		"*://odloty.pl/en/announcements/*",
+		"*://www.garsoniera.com.pl/forum/index.php?app=googlecse*"
 	  ],
 	  "js": ["content.js"],
 	  "css": ["style.css"]

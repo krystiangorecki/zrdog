@@ -147,16 +147,22 @@ function executeOdoR() {
 }
 
 function getOptionsAndExecute() {
-debugger;
-	chrome.storage.sync.get(['openInNewTab'], function (result) {
 
-		var openInNewTab = result.openInNewTab;
-		chrome.storage.sync.get(['openTwoAtOnce'], function (result) {
+	if (window.location.hostname.indexOf(g) != -1) {
+		// alternative search for Forum
+		checkIfSearchResultsLoaded();
+	} else {
+		// r i o buttons
+		chrome.storage.sync.get(['openInNewTab'], function (result) {
 
-			var openTwoAtOnce = result.openTwoAtOnce;
-			continueExecutionWithOptionsLoaded(openInNewTab, openTwoAtOnce);
+			var openInNewTab = result.openInNewTab;
+			chrome.storage.sync.get(['openTwoAtOnce'], function (result) {
+
+				var openTwoAtOnce = result.openTwoAtOnce;
+				continueExecutionWithOptionsLoaded(openInNewTab, openTwoAtOnce);
+			});
 		});
-	});
+	}
 
 }
 
@@ -183,5 +189,57 @@ function continueExecutionWithOptionsLoaded(openInNewTab, openTwoAtOnce) {
 	}
 	applyDynamicTarget();
 }
+
+//--------------
+// r and o part above
+// g alternative search part below
+//--------------
+
+var tries = 0;
+var searchResultsLoaded = false;
+
+function checkIfSearchResultsLoaded() {
+	tries++;
+	var element = document.querySelector("div.gsc-result");
+	// alert('try number ' + tries + ' element = ' + element);
+	searchResultsLoaded = element != null;
+	//alert('searchResultsLoaded? ' +searchResultsLoaded);
+	if (!searchResultsLoaded) {
+		if (tries < 10) {
+			setTimeout(checkIfSearchResultsLoaded, 500);
+		}
+	} else {
+		continueExecution();
+	}
+}
+
+function continueExecution() {
+	var noResults = document.querySelector("div.gs-snippet");
+	// alert('noResults ' + noResults);
+	if (noResults != null) {
+		addButton();
+	}
+}
+
+function doSearch() {
+	var number = document.querySelector("#gsc-i-id1").value;
+	document.querySelector('#main_search').value = number;
+	document.querySelector('#search_options').click();
+	document.querySelector('label[title="Forum"]').click();
+	document.querySelector('#search-box').submit();
+}
+
+function addButton() {
+	// alert('adding button');
+	var destinationElement = document.querySelector(".gsc-resultsHeader");
+	var searchButton = document.createElement("a");
+	searchButton.setAttribute('href', '#');
+	searchButton.addEventListener("click", doSearch);
+	searchButton.setAttribute('style', ' margin-left:20px; background-color: white;  color: black;  text-color: black;  border: 2px solid red;  padding: 1px 2px;  text-align: center;  text-decoration: none;  display: inline-block;');
+	searchButton.text = ' szukaj bezpośrednio na Forum';
+	insertAfter(destinationElement, searchButton);
+}
+
+//--------------
 
 getOptionsAndExecute();
