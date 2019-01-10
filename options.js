@@ -1,8 +1,11 @@
 // Saves options to chrome.storage
+
+// openTwoAtOnce is deprecated but whole logic is left for future reuse!
+
 function saveOptions() {
   //alert('saving');
   var openInNewTab = document.getElementById('openInNewTab').checked;
-  var openTwoAtOnce = document.getElementById('openTwoAtOnce').checked;
+  var openTwoAtOnce = false; //document.getElementById('openTwoAtOnce').checked;
   chrome.storage.sync.set({
     openInNewTab: openInNewTab,
 	openTwoAtOnce: openTwoAtOnce
@@ -25,8 +28,8 @@ function restoreOptions() {
 	openTwoAtOnce: false
   }, function(items) {
     document.getElementById('openInNewTab').checked = items.openInNewTab;
-    document.getElementById('openTwoAtOnce').checked = items.openTwoAtOnce;
-	showOrHideSubCheckbox();
+    //document.getElementById('openTwoAtOnce').checked = items.openTwoAtOnce;
+	//showOrHideSubCheckbox();
   });
 }
 
@@ -40,5 +43,5 @@ function showOrHideSubCheckbox() {
 document.addEventListener('DOMContentLoaded', restoreOptions);
 // document.getElementById('save').addEventListener('click', saveOptions);
 document.getElementById('openInNewTab').addEventListener('change', saveOptions);
-document.getElementById('openInNewTab').addEventListener('change', showOrHideSubCheckbox);
-document.getElementById('openTwoAtOnce').addEventListener('change', saveOptions);
+//document.getElementById('openInNewTab').addEventListener('change', showOrHideSubCheckbox);
+//document.getElementById('openTwoAtOnce').addEventListener('change', saveOptions);

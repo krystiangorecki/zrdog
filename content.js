@@ -20,105 +20,50 @@ function applyDynamicTarget() {
 	});
 }
 
-// na stronie r dodaje linki do g
-function executeRdoGDouble() {
-	// wyszukuję element z numerem telefonu
+// adds g link on r
+function executeRdoG() {
+	// get element with phone number
 	var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
-	// pobieram z niego sam numer
+	// get number text from element
 	var phone = phoneElement.textContent.trim();
 	//alert(phone);
 
-	// tworzę link do wyszukiwania numeru telefonu ze spacjami
-	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone + '"';
-	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > g </a>';
-
-	// tworzę link do wyszukiwania numeru telefonu z myślnikami
-	var url2 = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
-	var newLink2 = document.createElement("span");
-	newLink2.innerHTML = ' <a href="' + url2 + '" class="linkDoG dynamicTarget" > g- </a>';
-
-	// wyszukuje element "Kontakt"...
-	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
-	// ... i wstawia za nim oba linki
-	insertAfter(contactElement, newLink2);
-	insertAfter(contactElement, newLink);
-}
-
-// na stronie o dodaje linki do g
-function executeOdoGDouble() {
-	// wyszukuję element z numerem telefonu
-	var phoneElement = document.querySelector('h3.contactNumber');
-	// pobieram z niego sam numer
-	var phone = phoneElement.textContent.trim();
-	//alert(phone);
-
-	// tworzę link do wyszukiwania numeru telefonu ze spacjami
-	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone + '"';
-	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > g </a>';
-
-	// tworzę link do wyszukiwania numeru telefonu z myślnikami
-	var url2 = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
-	var newLink2 = document.createElement("span");
-	newLink2.innerHTML = ' <a href="' + url2 + '" class="linkDoG dynamicTarget" > g- </a>';
-
-	// wyszukuje element "Kontakt"...
-	insertAfter(phoneElement, newLink2);
-	// ... i wstawia za nim oba linki
-	insertAfter(phoneElement, newLink);
-}
-
-// na stronie r dodaje linki do g
-function executeRdoGSingle() {
-	// wyszukuję element z numerem telefonu
-	var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
-	// pobieram z niego sam numer
-	var phone = phoneElement.textContent.trim();
-	//alert(phone);
-
-	// tworzę URL do wyszukiwania numeru telefonu ze spacjami
-	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone + '"';
-	// tworzę URL do wyszukiwania numeru telefonu z myślnikami
-	var url2 = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
+	// create URL to search for a phone number with dashes
+	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
 
 	var newLink = document.createElement("span");
 	newLink.innerHTML = ' <a href="#" class="linkDoG dynamicTarget" > g </a>';
 	newLink.addEventListener("click", function (data) {
 		window.open(url);
-		window.open(url2);
 	});
 
-	// wyszukuje element "Kontakt"...
+	// get element "Kontakt"...
 	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
-	// ... i wstawia za nim link
+	// ... insert new link after it
 	insertAfter(contactElement, newLink);
 }
 
-// na stronie o dodaje linki do g
-function executeOdoGSingle() {
-	// wyszukuję element z numerem telefonu
+// adds link to g on o
+function executeOdoG() {
+	// get element with phone number
 	var phoneElement = document.querySelector('h3.contactNumber');
-	// pobieram z niego sam numer
+	// get number text from element
 	var phone = phoneElement.textContent.trim();
 	//alert(phone);
 
-	// tworzę URL do wyszukiwania numeru telefonu ze spacjami
-	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone + '"';
-	// tworzę URL do wyszukiwania numeru telefonu z myślnikami
-	var url2 = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
+	// create URL to search for a phone number with dashes
+	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
 	var newLink = document.createElement("span");
 	newLink.innerHTML = ' <a href="#" class="linkDoG dynamicTarget" > g </a>';
 	newLink.addEventListener("click", function (data) {
 		window.open(url);
-		window.open(url2);
 	});
 
-	// wstawia link
+	// inserts link after phone number
 	insertAfter(phoneElement, newLink);
 }
 
-// na stronie r dodaje linki do r
+// adds links to r on r to allow searching for more ads with the same phone number
 function executeRdoR() {
 	var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
 	var phone = phoneElement.textContent.trim();
@@ -127,13 +72,13 @@ function executeRdoR() {
 	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('') + "&key_word=#show";
 	var newLink = document.createElement("span");
 	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > r </a>';
-	// wyszukuje element "Kontakt"...
+	// get element "Kontakt"...
 	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
-	// ... i wstawia za nim link
+	// ... insert new link after it
 	insertAfter(contactElement, newLink);
 }
 
-// na stronie o dodaje linki do r
+// adds links to r on o
 function executeOdoR() {
 	var phoneElement = document.querySelector('h3.contactNumber');
 	var phone = phoneElement.textContent.trim();
@@ -146,46 +91,31 @@ function executeOdoR() {
 	insertAfter(phoneElement, newLink);
 }
 
-function getOptionsAndExecute() {
+function executeMain() {
 
 	if (window.location.hostname.indexOf(g) != -1) {
-		// alternative search for Forum
+		// alternative search using internal Forum engine
 		checkIfSearchResultsLoaded();
 	} else {
-		// r i o buttons
-		chrome.storage.sync.get(['openInNewTab'], function (result) {
-
-			var openInNewTab = result.openInNewTab;
-			chrome.storage.sync.get(['openTwoAtOnce'], function (result) {
-
-				var openTwoAtOnce = result.openTwoAtOnce;
-				continueExecutionWithOptionsLoaded(openInNewTab, openTwoAtOnce);
-			});
-		});
+		// adds buttons on r and o
+		addButtonsForRiO();
 	}
 
 }
 
-function continueExecutionWithOptionsLoaded(openInNewTab, openTwoAtOnce) {
+// adds buttons on r and o
+function addButtonsForRiO() {
 	if (window.location.hostname.indexOf(r) != -1) {
-		// dodaj link do r (inne ogłozsenia dla tego samego numeru)
+		// add link to r (other ads for the same number)
 		executeRdoR();
-		// dodaj link do g
-		if (openInNewTab && openTwoAtOnce) {
-			executeRdoGSingle();
-		} else {
-			executeRdoGDouble();
-		}
+		// add lik to g
+		executeRdoG();
 	} else {
-		// jestem na o
-		// dodaj link do r
+		// I'm on o
+		// add link to r
 		executeOdoR();
-		// dodaj link do g
-		if (openInNewTab && openTwoAtOnce) {
-			executeOdoGSingle();
-		} else {
-			executeOdoGDouble();
-		}
+		// add link to g
+		executeOdoG();
 	}
 	applyDynamicTarget();
 }
@@ -242,4 +172,4 @@ function addButton() {
 
 //--------------
 
-getOptionsAndExecute();
+executeMain();
