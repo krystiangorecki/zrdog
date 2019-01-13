@@ -128,14 +128,29 @@ function addButtonsForRiO() {
 var tries = 0;
 var searchResultsLoaded = false;
 
+// called when search was performed too often and certain number of seconds have alfresdy passed
+function searchAgainAfterWaiting() {
+	document.querySelector('input[name="submit"]').click();
+}
+
 function checkIfSearchResultsLoaded() {
 	tries++;
 	var element = document.querySelector("div.gsc-result");
 	// alert('try number ' + tries + ' element = ' + element);
 	searchResultsLoaded = element != null;
-	//alert('searchResultsLoaded? ' +searchResultsLoaded);
+	// alert('searchResultsLoaded? ' + searchResultsLoaded);
 	if (!searchResultsLoaded) {
-		if (tries < 10) {
+		// two possible reasons here:
+		// 1 antiflood protection - have to wait x seconds
+		// 2 too early check - page not fully loaded
+
+		// check if search protection is present
+		var protection = document.querySelector('#middle_column p.message.error');
+		if (protection != null && protection.textContent.indexOf('odczekać') != -1) {
+			var timeToWait = protection.textContent.replace(/\D/g, '');
+			setTimeout(searchAgainAfterWaiting, timeToWait * 1100);
+		} else if (tries < 10) {
+			// give page some time to load and try again
 			setTimeout(checkIfSearchResultsLoaded, 500);
 		}
 	} else {
