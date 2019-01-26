@@ -3,6 +3,8 @@
 var r = decodeURIComponent('%72%6f%6b%73%61%2e%70%6c');
 var g = decodeURIComponent('%77%77%77%2e%67%61%72%73%6f%6e%69%65%72%61%2e%63%6f%6d%2e%70%6c');
 
+var autosearch = 1;
+
 function insertAfter(referenceNode, newNode) {
 	referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
@@ -174,6 +176,15 @@ function doSearch() {
 	document.querySelector('#search-box').submit();
 }
 
+function updateCounterAndAutoclickButton(searchButton, counter, time) {
+	if (time > 1) {
+		counter.text = time - 1;
+		setTimeout(updateCounterAndAutoclickButton, 1000, searchButton, counter, time - 1);
+	} else {
+		searchButton.click();
+	}
+}
+
 function addButton() {
 	// alert('adding button');
 	var destinationElement = document.querySelector(".gsc-resultsHeader");
@@ -183,6 +194,16 @@ function addButton() {
 	searchButton.setAttribute('style', ' margin-left:20px; background-color: white;  color: black;  text-color: black;  border: 2px solid red;  padding: 1px 2px;  text-align: center;  text-decoration: none;  display: inline-block;');
 	searchButton.text = ' szukaj bezpośrednio na Forum';
 	insertAfter(destinationElement, searchButton);
+
+	// add counter to autosearch
+	if (autosearch == 1) {
+		var time = 4;
+		var counter = document.createElement("a");
+		counter.text = time;
+		counter.setAttribute('style', ' margin-left:10px;');
+		insertAfter(searchButton, counter);
+		updateCounterAndAutoclickButton(searchButton, counter, time);
+	}
 }
 
 //--------------
