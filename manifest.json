@@ -1,11 +1,15 @@
 {
+  "manifest_version": 2,
   "name": "z r do g",
   "version": "1.01",
-  "manifest_version": 2,
-  "description": "z r do g",
+
+  "default_locale": "en",
+  "description": "Facilitates navigation between related sites.",
+
   "icons": { "16": "icon16.png",
              "48": "icon48.png",
              "128": "icon128.png" },
+
   "content_scripts": [
     {
 	  "matches": [
@@ -35,8 +39,11 @@
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
+
+  "author": "ffrr33aakk",
+
   "permissions": [
-	"tabs",
+    "tabs",
     "storage"
   ]
 }
