@@ -4,9 +4,12 @@
   "description": "__MSG_appDesc__",
   "default_locale": "pl",
   "manifest_version": 2,
+  "description": "Facilitates navigation between related sites.",
+
   "icons": { "16": "icon16.png",
              "48": "icon48.png",
              "128": "icon128.png" },
+
   "content_scripts": [
     {
 	  "matches": [
