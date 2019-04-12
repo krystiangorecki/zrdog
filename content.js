@@ -168,14 +168,16 @@ function continueExecution() {
 	}
 }
 
-function doSearch() {
+function prepareSearch() {
 	var number = document.querySelector("#gsc-i-id1").value;
 	document.querySelector('#main_search').value = number;
 	document.querySelector('#search_options').click();
 	document.querySelector('label[title="Forum"]').click();
-	document.querySelector('#search-box').submit();
 }
 
+function doSearch() {
+	document.querySelector('#search-box').submit();
+}
 function updateCounterAndAutoclickButton(searchButton, counter, time) {
 	if (time > 1) {
 		counter.text = time - 1;
@@ -190,6 +192,7 @@ function addButton() {
 	var destinationElement = document.querySelector(".gsc-resultsHeader");
 	var searchButton = document.createElement("a");
 	searchButton.setAttribute('href', '#');
+	prepareSearch();
 	searchButton.addEventListener("click", doSearch);
 	searchButton.setAttribute('style', ' margin-left:20px; background-color: white;  color: black;  text-color: black;  border: 2px solid red;  padding: 1px 2px;  text-align: center;  text-decoration: none;  display: inline-block;');
 	searchButton.text = ' szukaj bezpośrednio na Forum';
