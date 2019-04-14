@@ -2,6 +2,7 @@
 
 var r = decodeURIComponent('%72%6f%6b%73%61%2e%70%6c');
 var g = decodeURIComponent('%77%77%77%2e%67%61%72%73%6f%6e%69%65%72%61%2e%63%6f%6d%2e%70%6c');
+var hm = decodeURIComponent('%77%77%77%2e%68%6f%74%6d%61%78%2e%70%6c');
 
 var autosearch = 1;
 
@@ -65,13 +66,32 @@ function executeOdoG() {
 	insertAfter(phoneElement, newLink);
 }
 
+// adds link to g on hm
+function executeHMdoG() {
+	// get element with phone number
+	var phoneElement = document.querySelector('div.anons_telefon');
+	// get number text from element
+	var phone = phoneElement.textContent.replace('tel.','').trim();
+	//alert(phone);
+
+	// create URL to search for a phone number with dashes
+	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
+	var newLink = document.createElement("span");
+	newLink.innerHTML = ' <a href="#" class="linkDoG dynamicTarget" > g </a>';
+	newLink.addEventListener("click", function (data) {
+		window.open(url);
+	});
+
+	// inserts link after phone number
+	insertAfter(phoneElement, newLink);
+}
 // adds links to r on r to allow searching for more ads with the same phone number
 function executeRdoR() {
 	var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
 	var phone = phoneElement.textContent.trim();
 	//alert(phone);
 
-	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('') + "&key_word=#show";
+	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('').split('-').join('') + "&key_word=#show";
 	var newLink = document.createElement("span");
 	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > r </a>';
 	// get element "Kontakt"...
@@ -86,7 +106,20 @@ function executeOdoR() {
 	var phone = phoneElement.textContent.trim();
 	//alert(phone);
 
-	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('') + "&key_word=#show";
+	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' +  phone.split(' ').join('').split('-').join('')  + "&key_word=#show";
+	var newLink = document.createElement("span");
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > r </a>';
+
+	insertAfter(phoneElement, newLink);
+}
+
+// adds links to r on hm
+function executeHMdoR() {
+	var phoneElement = document.querySelector('div.anons_telefon');
+	var phone = phoneElement.textContent.replace('tel.','').trim();
+	//alert(phone);
+
+	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('').split('-').join('') + "&key_word=#show";
 	var newLink = document.createElement("span");
 	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > r </a>';
 
@@ -94,7 +127,6 @@ function executeOdoR() {
 }
 
 function executeMain() {
-
 	if (window.location.hostname.indexOf(g) != -1) {
 		// alternative search using internal Forum engine
 		checkIfSearchResultsLoaded();
@@ -112,6 +144,16 @@ function addButtonsForRiO() {
 		executeRdoR();
 		// add lik to g
 		executeRdoG();
+	} else if (window.location.hostname.indexOf(hm) != -1) {
+		// add links only if not on main page
+		// required because of URL scheme, everything has URL like /abc
+		if(!document.documentURI.endsWith('.pl/#')){
+			// I'm on hm
+			// add link to g
+			executeHMdoG();
+			// add link to r
+			executeHMdoR();
+		}
 	} else {
 		// I'm on o
 		// add link to r
