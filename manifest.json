@@ -1,5 +1,5 @@
 {
-  "version": "1.03",
+  "version": "1.04",
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "pl",
@@ -28,7 +28,8 @@
 		"*://o.pl/en/announcements/*",
 		"*://o.pl/pl/announcements/*",
 		"*://www.g.com.pl/forum/index.php?app=googlecse*",
-		"*://www.g.com.pl/forum/index.php?app=core*"
+		"*://www.g.com.pl/forum/index.php?app=core*",
+		"*://www.hm.pl/*"
 	  ],
 	  "js": ["content.js"],
 	  "css": ["style.css"]
