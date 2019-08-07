@@ -3,6 +3,7 @@
 var r = decodeURIComponent('%72%6f%6b%73%61%2e%70%6c');
 var g = decodeURIComponent('%77%77%77%2e%67%61%72%73%6f%6e%69%65%72%61%2e%63%6f%6d%2e%70%6c');
 var hm = decodeURIComponent('%77%77%77%2e%68%6f%74%6d%61%78%2e%70%6c');
+var e = decodeURIComponent('%65%72%6f%6d%65%74%72%2e%70%6c');
 
 var autosearch = 1;
 
@@ -100,6 +101,20 @@ function executeRdoR() {
 	insertAfter(contactElement, newLink);
 }
 
+// adds links to e on r to allow searching for reviews for the same phone number
+function executeRdoE() {
+	var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
+	var phone = phoneElement.textContent.trim();
+	//alert(phone);
+	var url = 'https://' + e + '/szukaj?q=%22' + phone.split(' ').join('-') + "%22";
+	var newLink = document.createElement("span");
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > e </a>';
+	// get element "Kontakt"...
+	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
+	// ... insert new link after it
+	insertAfter(contactElement, newLink);
+}
+
 // adds links to r on o
 function executeOdoR() {
 	var phoneElement = document.querySelector('h3.contactNumber');
@@ -126,6 +141,21 @@ function executeHMdoR() {
 	insertAfter(phoneElement, newLink);
 }
 
+// adds links to r on e
+function executeEdoR() {
+	var phoneElements = document.querySelectorAll('a[name=escort-phones] ~ ul>li>a');
+	for(var i = 0 ; i < phoneElements.length ; i++){
+		var phone = phoneElements[i].textContent.trim();
+		//alert(phone);
+
+		var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('').split('-').join('') + "&key_word=#show";
+		var newLink = document.createElement("span");
+		newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > r </a>';
+
+		insertAfter(phoneElements[i], newLink);
+	}
+}
+
 function executeMain() {
 	if (window.location.hostname.indexOf(g) != -1) {
 		// alternative search using internal Forum engine
@@ -142,7 +172,9 @@ function addButtonsForRiO() {
 	if (window.location.hostname.indexOf(r) != -1) {
 		// add link to r (other ads for the same number)
 		executeRdoR();
-		// add lik to g
+		// add link to e
+		executeRdoE();
+		// add link to g
 		executeRdoG();
 	} else if (window.location.hostname.indexOf(hm) != -1) {
 		// add links only if not on main page
@@ -154,6 +186,10 @@ function addButtonsForRiO() {
 			// add link to r
 			executeHMdoR();
 		}
+	} else if (window.location.hostname.indexOf(e) != -1) {
+		// I'm on e
+		// add link to r
+		executeEdoR();
 	} else {
 		// I'm on o
 		// add link to r
@@ -172,7 +208,7 @@ function addButtonsForRiO() {
 var tries = 0;
 var searchResultsLoaded = false;
 
-// called when search was performed too often and certain number of seconds have alfresdy passed
+// called when search was performed too often and certain number of seconds have already passed
 function searchAgainAfterWaiting() {
 	document.querySelector('input[name="submit"]').click();
 }
