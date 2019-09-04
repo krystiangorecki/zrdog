@@ -11,6 +11,10 @@ function insertAfter(referenceNode, newNode) {
 	referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
+function insertBefore(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode);
+}
+
 function applyDynamicTarget() {
 	chrome.storage.sync.get(['openInNewTab'], function (result) {
 		// alert('Value currently is ' + result.openInNewTab);
@@ -239,10 +243,11 @@ function checkIfSearchResultsLoaded() {
 }
 
 function continueExecution() {
+	// is message "Brak wyników" visible
 	var noResults = document.querySelector("div.gs-snippet");
 	// alert('noResults ' + noResults);
 	if (noResults != null) {
-		addButton();
+		addSearchForumButton();
 	}
 }
 
@@ -265,18 +270,19 @@ function updateCounterAndAutoclickButton(searchButton, counter, time) {
 	}
 }
 
-function addButton() {
+// when no results adds button for manual search
+function addSearchForumButton() {
 	// alert('adding button');
-	var destinationElement = document.querySelector(".gsc-resultsHeader");
+	var destinationElement = document.querySelector(".gsc-resultsRoot");
 	var searchButton = document.createElement("a");
 	searchButton.setAttribute('href', '#');
 	prepareSearch();
 	searchButton.addEventListener("click", doSearch);
 	searchButton.setAttribute('style', ' margin-left:20px; background-color: white;  color: black;  text-color: black;  border: 2px solid red;  padding: 1px 2px;  text-align: center;  text-decoration: none;  display: inline-block;');
 	searchButton.text = ' szukaj bezpośrednio na Forum';
-	insertAfter(destinationElement, searchButton);
+	insertBefore(destinationElement, searchButton);
 
-	// add counter to autosearch
+	// add countdown to autosearch
 	if (autosearch == 1) {
 		var time = 4;
 		var counter = document.createElement("a");
