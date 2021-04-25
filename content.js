@@ -105,18 +105,24 @@ function executeRdoR() {
 	insertAfter(contactElement, newLink);
 }
 
-// adds links to e on r to allow searching for reviews for the same phone number
+// adds link to e on r to allow searching for reviews for the same phone number
 function executeRdoE() {
-	var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
-	var phone = phoneElement.textContent.trim();
-	//alert(phone);
-	var url = 'https://' + e + '/szukaj?q=%22' + phone.split(' ').join('-') + "%22";
-	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > e </a>';
-	// get element "Kontakt"...
-	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
-	// ... insert new link after it
-	insertAfter(contactElement, newLink);
+	chrome.storage.sync.get(['showElink'], function (result) {
+		// alert('showElink is ' + result.showElink);
+		var showElink = result.showElink;
+		if (showElink) {
+			var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
+			var phone = phoneElement.textContent.trim();
+			//alert(phone);
+			var url = 'https://' + e + '/szukaj?q=%22' + phone.split(' ').join('-') + "%22";
+			var newLink = document.createElement("span");
+			newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > e </a>';
+			// get element "Kontakt"...
+			var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
+			// ... insert new link after it
+			insertAfter(contactElement, newLink);
+		}
+	});
 }
 
 // adds links to r on o
@@ -341,8 +347,8 @@ function executeMain() {
 	if (window.location.hostname.indexOf(g) != -1) {
 		// alternative search using internal Forum engine
 		checkIfSearchResultsLoaded();
-	} else {
-		// adds buttons on r and o
+	} else if (window.location.hostname.indexOf(r) != -1) {
+		// adds buttons on r
 		addButtonsForRiO();
 		// add buttons for internal r search
 		addCityLink();
@@ -350,6 +356,9 @@ function executeMain() {
 		addWeightLink();
 		addHeightLink();
 		addPriceLink();
+	} else {
+		// adds buttons on o and hm
+		addButtonsForRiO();
 	}
 }
 
