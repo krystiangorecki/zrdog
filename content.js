@@ -160,17 +160,6 @@ function executeEdoR() {
 	}
 }
 
-function executeMain() {
-	if (window.location.hostname.indexOf(g) != -1) {
-		// alternative search using internal Forum engine
-		checkIfSearchResultsLoaded();
-	} else {
-		// adds buttons on r and o
-		addButtonsForRiO();
-	}
-
-}
-
 // adds buttons on r and o
 function addButtonsForRiO() {
 	if (window.location.hostname.indexOf(r) != -1) {
@@ -291,6 +280,19 @@ function addSearchForumButton() {
 		insertAfter(searchButton, counter);
 		updateCounterAndAutoclickButton(searchButton, counter, time);
 	}
+}
+
+//--------------
+
+function executeMain() {
+	if (window.location.hostname.indexOf(g) != -1) {
+		// alternative search using internal Forum engine
+		checkIfSearchResultsLoaded();
+	} else {
+		// adds buttons on r and o
+		addButtonsForRiO();
+	}
+
 }
 
 //--------------
