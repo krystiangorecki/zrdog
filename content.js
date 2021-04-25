@@ -322,7 +322,21 @@ function addHeightLink() {
 
 function addLinkForLabel(valueElement, cena, wiek, waga, wzrost, linkClass){
     var city = document.querySelector('#anons_details span.dane_anonsu_fiolet').innerText;
-    valueElement.outerHTML = '<a href="https://www.' + r + '/pl/szukaj/?anons_type=a&anons_category=0&anons_city%5B%5D=' + city + '&cenaod=' + cena + '&cenado=' + cena + '&cenapoldo=0&cena15do=0&cenanocod=0&cenanocdo=0&wiekod=' + wiek + '&wiekdo=' + wiek + '&wagaod=' + waga + '&wagado=' + waga + '&wzrostod=' + wzrost + '&wzrostdo=' + wzrost + '&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=&key_word=#show" > <span class="' + linkClass + '">' + valueElement.innerText + '</span> </a>';
+	var state = getStateForCity(city);
+    valueElement.outerHTML = '<a href="https://www.' + r + '/pl/szukaj/?anons_type=a&anons_category=0&anons_city%5B%5D=' + city + '&anons_state=' + state + '&cenaod=' + cena + '&cenado=' + cena + '&cenapoldo=0&cena15do=0&cenanocod=0&cenanocdo=0&wiekod=' + wiek + '&wiekdo=' + wiek + '&wagaod=' + waga + '&wagado=' + waga + '&wzrostod=' + wzrost + '&wzrostdo=' + wzrost + '&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=&key_word=#show" > <span class="' + linkClass + '">' + valueElement.innerText + '</span> </a>';
+}
+
+function getStateForCity(city) {
+	const cities = document.querySelectorAll('#lista_miast .city_name');
+	var state;
+	for (var i = 0; i < cities.length; i++) {
+		if (cities[i].innerText === city) {
+			state = cities[i].parentNode.querySelector('.woj_name').innerText;
+			break;
+		}
+	}
+    state = state.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace('ł', 'l');
+	return state;
 }
 
 function getLabelElement(label, valueSelector) {
