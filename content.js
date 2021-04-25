@@ -282,6 +282,59 @@ function addSearchForumButton() {
 	}
 }
 
+
+//--------------- FILTERING LINKS
+	
+function addCityLink() {
+    var cityElement = document.querySelector('#anons_details span.dane_anonsu_fiolet');
+    cityElement.outerHTML = '<a href="https://www.' + r + '/pl/anonse/wszystkie/' + cityElement.innerText + '" ><span class="dane_anonsu_fiolet dane_anonsu_tytul">' + cityElement.innerText + '</span> </a>';
+}
+
+function addPriceLink() {
+    var valueElement = getLabelElement("1 godz", ".dane_anonsu_tytul:nth-child(2)");
+    var cena = valueElement.innerText.match(/(\d+)/gi)[0];
+    addLinkForLabel(valueElement, cena, 0, 0, 0, "dane_anonsu_fiolet dane_anonsu_tytul");
+}
+
+function addAgeLink() {
+    var valueElement = getLabelElement("Wiek", ".dane_anonsu_value");
+    var wiek = valueElement.innerText.match(/(\d+)/gi)[0];
+    addLinkForLabel(valueElement, 0, wiek, 0, 0, "dane_anonsu_value");
+}
+
+function addWeightLink() {
+    var valueElement = getLabelElement("Waga", ".dane_anonsu_value");
+    var waga = valueElement.innerText.match(/(\d+)/gi)[0];
+    addLinkForLabel(valueElement, 0, 0, waga, 0, "dane_anonsu_value");
+}
+
+function addHeightLink() {
+    var valueElement = getLabelElement("Wzrost", ".dane_anonsu_value");
+    var wzrost = valueElement.innerText.match(/(\d+)/gi)[0];
+    addLinkForLabel(valueElement, 0, 0, 0, wzrost, "dane_anonsu_value");
+}
+
+function addLinkForLabel(valueElement, cena, wiek, waga, wzrost, linkClass){
+    var city = document.querySelector('#anons_details span.dane_anonsu_fiolet').innerText;
+    valueElement.outerHTML = '<a href="https://www.' + r + '/pl/szukaj/?anons_type=a&anons_category=0&anons_city%5B%5D=' + city + '&cenaod=' + cena + '&cenado=' + cena + '&cenapoldo=0&cena15do=0&cenanocod=0&cenanocdo=0&wiekod=' + wiek + '&wiekdo=' + wiek + '&wagaod=' + waga + '&wagado=' + waga + '&wzrostod=' + wzrost + '&wzrostdo=' + wzrost + '&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=&key_word=#show" > <span class="' + linkClass + '">' + valueElement.innerText + '</span> </a>';
+}
+
+function getLabelElement(label, valueSelector) {
+    var matchedLi = findElementByLabel(label);
+    return matchedLi.querySelector(valueSelector);
+}
+
+function findElementByLabel(label) {
+    var filter = Array.prototype.filter;
+    var result = document.querySelectorAll('#anons_details li');
+    var filtered = filter.call( result, function( node ) {
+        return node.innerText.indexOf(label)!=-1;
+    });
+    if (filtered.length > 0) {
+        return filtered[0];
+    }
+}
+
 //--------------
 
 function executeMain() {
@@ -291,8 +344,13 @@ function executeMain() {
 	} else {
 		// adds buttons on r and o
 		addButtonsForRiO();
+		// add buttons for internal r search
+		addCityLink();
+		addAgeLink();
+		addWeightLink();
+		addHeightLink();
+		addPriceLink();
 	}
-
 }
 
 //--------------
