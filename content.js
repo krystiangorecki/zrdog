@@ -292,7 +292,7 @@ function addSearchForumButton() {
 //--------------- FILTERING LINKS
 	
 function addCityLink() {
-    var cityElement = document.querySelector('#anons_details span.dane_anonsu_fiolet');
+    var cityElement = getLabelElement("Miasto", ".dane_anonsu_fiolet");
     cityElement.outerHTML = '<a href="https://www.' + r + '/pl/anonse/wszystkie/' + cityElement.innerText + '" ><span class="dane_anonsu_fiolet dane_anonsu_tytul">' + cityElement.innerText + '</span> </a>';
 }
 
@@ -321,7 +321,7 @@ function addHeightLink() {
 }
 
 function addLinkForLabel(valueElement, cena, wiek, waga, wzrost, linkClass){
-    var city = document.querySelector('#anons_details span.dane_anonsu_fiolet').innerText;
+    var city = getLabelElement("Miasto", ".dane_anonsu_fiolet").innerText;
 	var state = getStateForCity(city);
     valueElement.outerHTML = '<a href="https://www.' + r + '/pl/szukaj/?anons_type=a&anons_category=0&anons_city%5B%5D=' + city + '&anons_state=' + state + '&cenaod=' + cena + '&cenado=' + cena + '&cenapoldo=0&cena15do=0&cenanocod=0&cenanocdo=0&wiekod=' + wiek + '&wiekdo=' + wiek + '&wagaod=' + waga + '&wagado=' + waga + '&wzrostod=' + wzrost + '&wzrostdo=' + wzrost + '&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=&key_word=#show" > <span class="' + linkClass + '">' + valueElement.innerText + '</span> </a>';
 }
