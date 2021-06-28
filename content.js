@@ -51,6 +51,27 @@ function executeRdoG() {
 	insertAfter(contactElement, newLink);
 }
 
+// adds g link on r by ad number
+function executeRdoGByAdNumber() {
+	var pathname = window.location.pathname;
+	var adNumber = pathname.substring(pathname.lastIndexOf('/')+1);
+	//alert(adNumber);
+
+	// create URL to search for a phone number with dashes
+	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=' + adNumber;
+
+	var newLink = document.createElement("span");
+	newLink.innerHTML = ' <a href="#" class="linkDoG dynamicTarget" > g2 </a>';
+	newLink.addEventListener("click", function (data) {
+		window.open(url);
+	});
+
+	// get element "Kontakt"...
+	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
+	// ... insert new link after it
+	insertAfter(contactElement, newLink);
+}
+
 // adds link to g on o
 function executeOdoG() {
 	// get element with phone number
@@ -173,6 +194,8 @@ function addButtonsForRiO() {
 		executeRdoR();
 		// add link to e
 		executeRdoE();
+		// add link to g by ad number
+		executeRdoGByAdNumber();
 		// add link to g
 		executeRdoG();
 	} else if (window.location.hostname.indexOf(hm) != -1) {
