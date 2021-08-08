@@ -37,13 +37,10 @@ function executeRdoG() {
 	//alert(phone);
 
 	// create URL to search for a phone number with dashes
-	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
+	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone.split(' ').join('-') + '%22';
 
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="#" class="linkDoG dynamicTarget" > g </a>';
-	newLink.addEventListener("click", function (data) {
-		window.open(url);
-	});
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > g </a>';
 
 	// get element "Kontakt"...
 	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
@@ -61,10 +58,7 @@ function executeRdoGByAdNumber() {
 	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=' + adNumber;
 
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="#" class="linkDoG dynamicTarget" > g2 </a>';
-	newLink.addEventListener("click", function (data) {
-		window.open(url);
-	});
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > g2 </a>';
 
 	// get element "Kontakt"...
 	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
@@ -81,12 +75,9 @@ function executeOdoG() {
 	//alert(phone);
 
 	// create URL to search for a phone number with dashes
-	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
+	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone.split(' ').join('-') + '%22';
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="#" class="linkDoG dynamicTarget" > g </a>';
-	newLink.addEventListener("click", function (data) {
-		window.open(url);
-	});
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > g </a>';
 
 	// inserts link after phone number
 	insertAfter(phoneElement, newLink);
@@ -101,12 +92,9 @@ function executeHMdoG() {
 	//alert(phone);
 
 	// create URL to search for a phone number with dashes
-	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q="' + phone.split(' ').join('-') + '"';
+	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone.split(' ').join('-') + '%22';
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="#" class="linkDoG dynamicTarget" > g </a>';
-	newLink.addEventListener("click", function (data) {
-		window.open(url);
-	});
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > g </a>';
 
 	// inserts link after phone number
 	insertAfter(phoneElement, newLink);
