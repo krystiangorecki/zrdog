@@ -308,25 +308,37 @@ function addCityLink() {
 }
 
 function addPriceLink() {
-    var valueElement = getLabelElement("1 godz", ".dane_anonsu_tytul:nth-child(2)");
+	var valueElement = getLabelElement("1 godz", ".dane_anonsu_tytul:nth-child(2)");
+	if (valueElement == undefined) {
+		return;
+	}
     var cena = valueElement.innerText.match(/(\d+)/gi)[0];
     addLinkForLabel(valueElement, cena, 0, 0, 0, "dane_anonsu_fiolet dane_anonsu_tytul");
 }
 
 function addAgeLink() {
-    var valueElement = getLabelElement("Wiek", ".dane_anonsu_value");
+	var valueElement = getLabelElement("Wiek", ".dane_anonsu_value");
+	if (valueElement == undefined) {
+		return;
+	}
     var wiek = valueElement.innerText.match(/(\d+)/gi)[0];
     addLinkForLabel(valueElement, 0, wiek, 0, 0, "dane_anonsu_value");
 }
 
 function addWeightLink() {
-    var valueElement = getLabelElement("Waga", ".dane_anonsu_value");
+	var valueElement = getLabelElement("Waga", ".dane_anonsu_value");
+	if (valueElement == undefined) {
+		return;
+	}
     var waga = valueElement.innerText.match(/(\d+)/gi)[0];
     addLinkForLabel(valueElement, 0, 0, waga, 0, "dane_anonsu_value");
 }
 
 function addHeightLink() {
-    var valueElement = getLabelElement("Wzrost", ".dane_anonsu_value");
+	var valueElement = getLabelElement("Wzrost", ".dane_anonsu_value");
+	if (valueElement == undefined) {
+		return;
+	}
     var wzrost = valueElement.innerText.match(/(\d+)/gi)[0];
     addLinkForLabel(valueElement, 0, 0, 0, wzrost, "dane_anonsu_value");
 }
@@ -351,8 +363,11 @@ function getStateForCity(city) {
 }
 
 function getLabelElement(label, valueSelector) {
-    var matchedLi = findElementByLabel(label);
-    return matchedLi.querySelector(valueSelector);
+	var matchedLi = findElementByLabel(label);
+	if (matchedLi == undefined) {
+		return null;
+	}
+	return matchedLi.querySelector(valueSelector);
 }
 
 function findElementByLabel(label) {
