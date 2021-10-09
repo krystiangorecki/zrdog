@@ -17,7 +17,6 @@ function insertBefore(referenceNode, newNode) {
 
 function applyDynamicTarget() {
 	chrome.storage.sync.get(['openInNewTab'], function (result) {
-		// alert('Value currently is ' + result.openInNewTab);
 		var openInNewTab = result.openInNewTab;
 		const links = Array.prototype.slice.apply(document.querySelectorAll('a.dynamicTarget'));
 		for (var i = 0; i < links.length; i++) {
@@ -40,7 +39,7 @@ function executeRdoG() {
 	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone.split(' ').join('-') + '%22';
 
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > g </a>';
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;g&nbsp;</a>';
 
 	// get element "Kontakt"...
 	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
@@ -77,7 +76,7 @@ function executeOdoG() {
 	// create URL to search for a phone number with dashes
 	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone.split(' ').join('-') + '%22';
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > g </a>';
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;g&nbsp;</a>';
 
 	// inserts link after phone number
 	insertAfter(phoneElement, newLink);
@@ -94,7 +93,7 @@ function executeHMdoG() {
 	// create URL to search for a phone number with dashes
 	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone.split(' ').join('-') + '%22';
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > g </a>';
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;g&nbsp;</a>';
 
 	// inserts link after phone number
 	insertAfter(phoneElement, newLink);
@@ -107,7 +106,7 @@ function executeRdoR() {
 
 	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('').split('-').join('') + "&key_word=#show";
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > r </a>';
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;r&nbsp;</a>';
 	// get element "Kontakt"...
 	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
 	// ... insert new link after it
@@ -142,7 +141,7 @@ function executeOdoR() {
 
 	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' +  phone.split(' ').join('').split('-').join('')  + "&key_word=#show";
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > r </a>';
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;r&nbsp;</a>';
 
 	insertAfter(phoneElement, newLink);
 }
@@ -155,7 +154,7 @@ function executeHMdoR() {
 
 	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('').split('-').join('') + "&key_word=#show";
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > r </a>';
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;r&nbsp;</a>';
 
 	insertAfter(phoneElement, newLink);
 }
@@ -169,7 +168,7 @@ function executeEdoR() {
 
 		var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('').split('-').join('') + "&key_word=#show";
 		var newLink = document.createElement("span");
-		newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > r </a>';
+		newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;r&nbsp;</a>';
 
 		insertAfter(phoneElements[i], newLink);
 	}
