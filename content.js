@@ -4,6 +4,7 @@ var r = decodeURIComponent('%72%6f%6b%73%61%2e%70%6c');
 var g = decodeURIComponent('%77%77%77%2e%67%61%72%73%6f%6e%69%65%72%61%2e%63%6f%6d%2e%70%6c');
 var hm = decodeURIComponent('%77%77%77%2e%68%6f%74%6d%61%78%2e%70%6c');
 var e = decodeURIComponent('%65%72%6f%6d%65%74%72%2e%70%6c');
+var o = decodeURIComponent('%6f%64%6c%6f%74%79%2e%70%6c');
 var esc = decodeURIComponent('%65%73%63%6f%72%74%2e%70%6c');
 
 var autosearch = 1;
