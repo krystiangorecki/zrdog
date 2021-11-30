@@ -4,6 +4,7 @@ var r = decodeURIComponent('%72%6f%6b%73%61%2e%70%6c');
 var g = decodeURIComponent('%77%77%77%2e%67%61%72%73%6f%6e%69%65%72%61%2e%63%6f%6d%2e%70%6c');
 var hm = decodeURIComponent('%77%77%77%2e%68%6f%74%6d%61%78%2e%70%6c');
 var e = decodeURIComponent('%65%72%6f%6d%65%74%72%2e%70%6c');
+var esc = decodeURIComponent('%65%73%63%6f%72%74%2e%70%6c');
 
 var autosearch = 1;
 
@@ -25,6 +26,29 @@ function applyDynamicTarget() {
 			}
 		}
 	});
+}
+
+
+// adds g link on esc
+function executeEscdoG() {
+	// get element with phone number
+	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
+	// get number text from element
+	var phone = phoneElement.textContent.trim();
+	if (phone.indexOf(')') > -1){
+		phone = phone.substring(phone.indexOf(')')+1);
+	}
+
+	// create URL to search for a phone number with dashes
+	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone + '%22';
+
+	var newLink = document.createElement("span");
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;g&nbsp;</a>';
+
+	// get element "Kontakt"...
+	var contactElement = phoneElement;
+	// ... insert new link after it
+	insertAfter(contactElement, newLink);
 }
 
 // adds g link on r
@@ -135,7 +159,7 @@ function executeRdoE() {
 
 // adds links to r on o
 function executeOdoR() {
-	var phoneElement = document.querySelector('h3.contactNumber');
+	var phoneElement = document.querySelector('div.details h3');
 	var phone = phoneElement.textContent.trim();
 	//alert(phone);
 
@@ -199,7 +223,7 @@ function addButtonsForRiO() {
 		// I'm on e
 		// add link to r
 		executeEdoR();
-	} else {
+	} else if (window.location.hostname.indexOf(o) != -1) {
 		// I'm on o
 		// add link to r
 		executeOdoR();
@@ -383,7 +407,9 @@ function findElementByLabel(label) {
 //--------------
 
 function executeMain() {
-	if (window.location.hostname.indexOf(g) != -1) {
+	if (window.location.hostname.indexOf(esc) != -1) {
+		executeEscdoG();
+	} else if (window.location.hostname.indexOf(g) != -1) {
 		// alternative search using internal Forum engine
 		checkIfSearchResultsLoaded();
 	} else if (window.location.hostname.indexOf(r) != -1) {
@@ -395,7 +421,7 @@ function executeMain() {
 		addWeightLink();
 		addHeightLink();
 		addPriceLink();
-	} else {
+	} else if (window.location.hostname.indexOf(o) != -1) {
 		// adds buttons on o and hm
 		addButtonsForRiO();
 	}
