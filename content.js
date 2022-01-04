@@ -369,86 +369,155 @@ function addSearchForumButton() {
 	}
 }
 
+//--------------- FILTERING LINKS FOR R
+//
+// function addCityLink() {
+//     var cityElement = getLabelElement("Miasto", ".dane_anonsu_fiolet");
+//     cityElement.outerHTML = '<a href="https://www.' + r + '/pl/anonse/wszystkie/' + cityElement.innerText + '" ><span class="dane_anonsu_fiolet dane_anonsu_tytul">' + cityElement.innerText + '</span> </a>';
+// }
+//
+// function addPriceLink() {
+// 	var valueElement = getLabelElement("1 godz", ".dane_anonsu_tytul:nth-child(2)");
+// 	if (valueElement == undefined) {
+// 		return;
+// 	}
+//     var cena = valueElement.innerText.match(/(\d+)/gi)[0];
+//     addLinkForLabel(valueElement, cena, 0, 0, 0, "dane_anonsu_fiolet dane_anonsu_tytul");
+// }
+//
+// function addAgeLink() {
+// 	var valueElement = getLabelElement("Wiek", ".dane_anonsu_value");
+// 	if (valueElement == undefined) {
+// 		return;
+// 	}
+//     var wiek = valueElement.innerText.match(/(\d+)/gi)[0];
+//     addLinkForLabel(valueElement, 0, wiek, 0, 0, "dane_anonsu_value");
+// }
+//
+// function addWeightLink() {
+// 	var valueElement = getLabelElement("Waga", ".dane_anonsu_value");
+// 	if (valueElement == undefined) {
+// 		return;
+// 	}
+//     var waga = valueElement.innerText.match(/(\d+)/gi)[0];
+//     addLinkForLabel(valueElement, 0, 0, waga, 0, "dane_anonsu_value");
+// }
+//
+// function addHeightLink() {
+// 	var valueElement = getLabelElement("Wzrost", ".dane_anonsu_value");
+// 	if (valueElement == undefined) {
+// 		return;
+// 	}
+//     var wzrost = valueElement.innerText.match(/(\d+)/gi)[0];
+//     addLinkForLabel(valueElement, 0, 0, 0, wzrost, "dane_anonsu_value");
+// }
+//
+// function addLinkForLabel(valueElement, cena, wiek, waga, wzrost, linkClass){
+//     var city = getLabelElement("Miasto", ".dane_anonsu_fiolet").innerText;
+// 	var state = getStateForCity(city);
+//     valueElement.outerHTML = '<a href="https://www.' + r + '/pl/szukaj/?anons_type=a&anons_category=0&anons_city%5B%5D=' + city + '&anons_state=' + state + '&cenaod=' + cena + '&cenado=' + cena + '&cenapoldo=0&cena15do=0&cenanocod=0&cenanocdo=0&wiekod=' + wiek + '&wiekdo=' + wiek + '&wagaod=' + waga + '&wagado=' + waga + '&wzrostod=' + wzrost + '&wzrostdo=' + wzrost + '&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=&key_word=#show" > <span class="' + linkClass + '">' + valueElement.innerText + '</span> </a>';
+// }
+//
+// function getStateForCity(city) {
+// 	const cities = document.querySelectorAll('#lista_miast .city_name');
+// 	var state;
+// 	for (var i = 0; i < cities.length; i++) {
+// 		if (cities[i].innerText === city) {
+// 			state = cities[i].parentNode.querySelector('.woj_name').innerText;
+// 			break;
+// 		}
+// 	}
+//     state = state.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace('ł', 'l');
+// 	return state;
+// }
+//
+// function getLabelElement(label, valueSelector) {
+// 	var matchedLi = findElementByLabel(label);
+// 	if (matchedLi == undefined) {
+// 		return null;
+// 	}
+// 	return matchedLi.querySelector(valueSelector);
+// }
+//
+// function findElementByLabel(label) {
+//     var filter = Array.prototype.filter;
+//     var result = document.querySelectorAll('#anons_details li');
+//     var filtered = filter.call( result, function( node ) {
+//         return node.innerText.indexOf(label)!=-1;
+//     });
+//     if (filtered.length > 0) {
+//         return filtered[0];
+//     }
+// }
 
-//--------------- FILTERING LINKS
-	
-function addCityLink() {
-    var cityElement = getLabelElement("Miasto", ".dane_anonsu_fiolet");
-    cityElement.outerHTML = '<a href="https://www.' + r + '/pl/anonse/wszystkie/' + cityElement.innerText + '" ><span class="dane_anonsu_fiolet dane_anonsu_tytul">' + cityElement.innerText + '</span> </a>';
-}
 
-function addPriceLink() {
-	var valueElement = getLabelElement("1 godz", ".dane_anonsu_tytul:nth-child(2)");
+//--------------- FILTERING LINKS FOR ESC
+
+ function addAgeLink() {
+	 var valueElement = getLabelElement("Wiek", ".sub-desc");
+	 if (valueElement == undefined) {
+		 return;
+	 }
+	 var wiek = valueElement.innerText.match(/(\d+)/gi)[0];
+	 addLinkForLabel(valueElement, 0, wiek, 0, 0, "");
+ }
+
+ function addWeightLink() {
+	 var valueElement = getLabelElement("Waga", ".sub-desc");
+	 if (valueElement == undefined) {
+		 return;
+	 }
+	 var waga = valueElement.innerText.match(/(\d+)/gi)[0];
+	 addLinkForLabel(valueElement, 0, 0, waga, 0, "");
+ }
+
+ function addHeightLink() {
+	var valueElement = getLabelElement("Wzrost", ".sub-desc");
+	 if (valueElement == undefined) {
+		 return;
+	 }
+	 var wzrost = valueElement.innerText.match(/(\d+)/gi)[0]
+	 addLinkForLabel(valueElement, 0, 0, 0, wzrost, "");
+ }
+
+ function addPriceLink() {
+	var valueElement = getLabelElement("1 godz", ".sub-desc");
 	if (valueElement == undefined) {
 		return;
 	}
-    var cena = valueElement.innerText.match(/(\d+)/gi)[0];
-    addLinkForLabel(valueElement, cena, 0, 0, 0, "dane_anonsu_fiolet dane_anonsu_tytul");
-}
+	var cena = valueElement.innerText.match(/(\d+)/gi)[0];
+	addLinkForLabel(valueElement, cena, 0, 0, 0, "");
+ }
 
-function addAgeLink() {
-	var valueElement = getLabelElement("Wiek", ".dane_anonsu_value");
-	if (valueElement == undefined) {
-		return;
-	}
-    var wiek = valueElement.innerText.match(/(\d+)/gi)[0];
-    addLinkForLabel(valueElement, 0, wiek, 0, 0, "dane_anonsu_value");
-}
-
-function addWeightLink() {
-	var valueElement = getLabelElement("Waga", ".dane_anonsu_value");
-	if (valueElement == undefined) {
-		return;
-	}
-    var waga = valueElement.innerText.match(/(\d+)/gi)[0];
-    addLinkForLabel(valueElement, 0, 0, waga, 0, "dane_anonsu_value");
-}
-
-function addHeightLink() {
-	var valueElement = getLabelElement("Wzrost", ".dane_anonsu_value");
-	if (valueElement == undefined) {
-		return;
-	}
-    var wzrost = valueElement.innerText.match(/(\d+)/gi)[0];
-    addLinkForLabel(valueElement, 0, 0, 0, wzrost, "dane_anonsu_value");
-}
-
-function addLinkForLabel(valueElement, cena, wiek, waga, wzrost, linkClass){
-    var city = getLabelElement("Miasto", ".dane_anonsu_fiolet").innerText;
-	var state = getStateForCity(city);
-    valueElement.outerHTML = '<a href="https://www.' + r + '/pl/szukaj/?anons_type=a&anons_category=0&anons_city%5B%5D=' + city + '&anons_state=' + state + '&cenaod=' + cena + '&cenado=' + cena + '&cenapoldo=0&cena15do=0&cenanocod=0&cenanocdo=0&wiekod=' + wiek + '&wiekdo=' + wiek + '&wagaod=' + waga + '&wagado=' + waga + '&wzrostod=' + wzrost + '&wzrostdo=' + wzrost + '&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=&key_word=#show" > <span class="' + linkClass + '">' + valueElement.innerText + '</span> </a>';
-}
-
-function getStateForCity(city) {
-	const cities = document.querySelectorAll('#lista_miast .city_name');
-	var state;
-	for (var i = 0; i < cities.length; i++) {
-		if (cities[i].innerText === city) {
-			state = cities[i].parentNode.querySelector('.woj_name').innerText;
-			break;
-		}
-	}
-    state = state.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace('ł', 'l');
-	return state;
-}
-
-function getLabelElement(label, valueSelector) {
+ function getLabelElement(label, valueSelector) {
 	var matchedLi = findElementByLabel(label);
 	if (matchedLi == undefined) {
 		return null;
 	}
 	return matchedLi.querySelector(valueSelector);
-}
+ }
 
-function findElementByLabel(label) {
-    var filter = Array.prototype.filter;
-    var result = document.querySelectorAll('#anons_details li');
-    var filtered = filter.call( result, function( node ) {
-        return node.innerText.indexOf(label)!=-1;
-    });
-    if (filtered.length > 0) {
-        return filtered[0];
-    }
+ function addLinkForLabel(valueElement, cena, wiek, waga, wzrost, linkClass) {
+	debugger;
+	var link = document.querySelector('div.content-location > span.sub-label > a:nth-child(2)')
+	var baseSearchURL = link.href;
+	valueElement.outerHTML = '<a href="' + baseSearchURL + '?filter_price_type=60' +
+	'&filter_price=' + cena + '%3B' + (cena>0?cena:10000) +
+	'&filter_age=' + (wiek>0?wiek:18) + '%3B' + (wiek>0?wiek:100) + 
+	'&filter_weight=' + (waga>0?waga:30) + '%3B' + (waga>0?waga:200) + 
+	'&filter_height=' + (wzrost>0?wzrost:100) + '%3B' + (wzrost>0?wzrost:220) + 
+	'&filter_breasts=0%3B8&q=" style="color:white; font-size:larger" class="' + linkClass + '">' + valueElement.innerText + ' </a>';
+ }
+
+ function findElementByLabel(label) {
+	 var filter = Array.prototype.filter;
+	 var result = document.querySelectorAll('div.stats-box > div.stat-elem');
+	 var filtered = filter.call( result, function( node ) {
+		 return node.innerText.indexOf(label)!=-1;
+	 });
+	if (filtered.length > 0) {
+		return filtered[0];
+	}
 }
 
 //--------------
@@ -457,6 +526,12 @@ function executeMain() {
 	if (window.location.hostname.indexOf(esc) != -1) {
 		executeEscdoEsc();
 		executeEscdoG();
+		// internal e search
+		debugger;
+		addAgeLink();
+		addWeightLink();
+		addHeightLink();
+		addPriceLink();
 	} else if (window.location.hostname.indexOf(g) != -1) {
 		// alternative search using internal Forum engine
 		checkIfSearchResultsLoaded();
@@ -464,11 +539,13 @@ function executeMain() {
 		// adds buttons on r
 		addButtonsForRiO();
 		// add buttons for internal r search
+		/*
 		addCityLink();
 		addAgeLink();
 		addWeightLink();
 		addHeightLink();
 		addPriceLink();
+		*/
 	} else if (window.location.hostname.indexOf(o) != -1) {
 		// adds buttons on o and hm
 		addButtonsForRiO();
