@@ -52,6 +52,28 @@ function executeEscdoG() {
 	insertAfter(contactElement, newLink);
 }
 
+// adds g link on esc
+function executeEscdoEsc() {
+	// get element with phone number
+	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
+	// get number text from element
+	var phone = phoneElement.textContent.trim();
+	if (phone.indexOf(')') > -1){
+		phone = phone.substring(phone.indexOf(')')+1);
+	}
+
+	// create URL to search for a phone number with dashes
+	var url = 'https://' + esc + '/szukaj/?q=' + phone;
+
+	var newLink = document.createElement("span");
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;e&nbsp;</a>';
+
+	// get element "Kontakt"...
+	var contactElement = phoneElement;
+	// ... insert new link after it
+	insertAfter(contactElement, newLink);
+}
+
 // adds g link on r
 function executeRdoG() {
 	// get element with phone number
@@ -409,6 +431,7 @@ function findElementByLabel(label) {
 
 function executeMain() {
 	if (window.location.hostname.indexOf(esc) != -1) {
+		executeEscdoEsc();
 		executeEscdoG();
 	} else if (window.location.hostname.indexOf(g) != -1) {
 		// alternative search using internal Forum engine
