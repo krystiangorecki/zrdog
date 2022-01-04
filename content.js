@@ -132,6 +132,25 @@ function executeOdoG() {
 	insertAfter(phoneElement, newLink);
 }
 
+// adds link to g on o
+function executeOdoEsc() {
+	// get element with phone number
+	var phoneElement = document.querySelector('h3.contactNumber');
+	if (phoneElement == undefined) {
+		phoneElement = document.querySelector('div.details > table h3');
+	}
+	// get number text from element
+	var phone = phoneElement.textContent.trim();
+	//alert(phone);
+
+	// create URL to search for a phone number
+	var url = 'https://' + esc + '/szukaj/?q=' + phone;var newLink = document.createElement("span");
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;e&nbsp;</a>';
+
+	// inserts link after phone number
+	insertAfter(phoneElement, newLink);
+}
+
 // adds link to g on hm
 function executeHMdoG() {
 	// get element with phone number
@@ -251,6 +270,8 @@ function addButtonsForRiO() {
 		executeEdoR();
 	} else if (window.location.hostname.indexOf(o) != -1) {
 		// I'm on o
+		// add link to e
+		executeOdoEsc();
 		// add link to r
 		executeOdoR();
 		// add link to g
