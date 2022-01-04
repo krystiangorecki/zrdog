@@ -116,6 +116,9 @@ function executeRdoGByAdNumber() {
 function executeOdoG() {
 	// get element with phone number
 	var phoneElement = document.querySelector('h3.contactNumber');
+	if (phoneElement == undefined) {
+		phoneElement = document.querySelector('div.details > table h3');
+	}
 	// get number text from element
 	var phone = phoneElement.textContent.trim();
 	//alert(phone);
