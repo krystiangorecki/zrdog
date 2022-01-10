@@ -498,7 +498,6 @@ function addSearchForumButton() {
  }
 
  function addLinkForLabel(valueElement, cena, wiek, waga, wzrost, linkClass) {
-	debugger;
 	var link = document.querySelector('div.content-location > span.sub-label > a:nth-child(2)')
 	var baseSearchURL = link.href;
 	valueElement.outerHTML = '<a href="' + baseSearchURL + '?filter_price_type=60' +
@@ -527,7 +526,6 @@ function executeMain() {
 		executeEscdoEsc();
 		executeEscdoG();
 		// internal e search
-		debugger;
 		addAgeLink();
 		addWeightLink();
 		addHeightLink();
