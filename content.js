@@ -520,11 +520,51 @@ function addSearchForumButton() {
 }
 
 //--------------
+// monitoring number reveal
+
+function attachNumberRevealObserver() {
+	var containersToMonitor = document.querySelectorAll('div.content-info a[data-show-phone]');
+	containersToMonitor.forEach(obj => {
+		observeDOM( obj, function(m){
+			var addedNodes = [];
+			m.forEach(record => record.addedNodes.length & addedNodes.push(...record.addedNodes))
+			if (addedNodes.length>0){
+				executeEsc();
+			}
+		});
+	} );
+}
+
+// https://stackoverflow.com/questions/3219758/detect-changes-in-the-dom
+var observeDOM = (function() {
+	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
+	return function( obj, callback ){
+		if( !obj || obj.nodeType !== 1 ) return;
+
+		if( MutationObserver ){
+			var mutationObserver = new MutationObserver(callback)
+			mutationObserver.observe( obj, { childList:true, subtree:true })
+			return mutationObserver
+		}
+	}
+})();
+
+//--------------
+
+function revealPhoneNumber() {
+	attachNumberRevealObserver();
+	document.querySelector('div.content-info a[data-show-phone]').click();
+}
+
+function executeEsc() {
+	executeEscdoEsc();
+	executeEscdoG();
+}
 
 function executeMain() {
 	if (window.location.hostname.indexOf(esc) != -1) {
-		executeEscdoEsc();
-		executeEscdoG();
+		revealPhoneNumber();
 		// internal e search
 		addAgeLink();
 		addWeightLink();
