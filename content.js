@@ -14,7 +14,7 @@ function insertAfter(referenceNode, newNode) {
 }
 
 function insertBefore(referenceNode, newNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode);
+	referenceNode.parentNode.insertBefore(newNode, referenceNode);
 }
 
 function applyDynamicTarget() {
@@ -285,7 +285,6 @@ function addButtonsForRiO() {
 // g alternative search part below
 //--------------
 
-var tries = 0;
 var searchResultsLoaded = false;
 
 // called when search was performed too often and certain number of seconds have already passed
@@ -294,79 +293,35 @@ function searchAgainAfterWaiting() {
 }
 
 function checkIfSearchResultsLoaded() {
-	tries++;
-	var element = document.querySelector("div.gsc-result");
-	// alert('try number ' + tries + ' element = ' + element);
-	searchResultsLoaded = element != null;
-	// alert('searchResultsLoaded? ' + searchResultsLoaded);
-	if (!searchResultsLoaded) {
-		// two possible reasons here:
-		// 1 antiflood protection - have to wait x seconds
-		// 2 too early check - page not fully loaded
-
-		// check if search protection is present
-		var protection = document.querySelector('#middle_column p.message.error');
-		if (protection != null && protection.textContent.indexOf('odczekać') != -1) {
-			var timeToWait = protection.textContent.replace(/\D/g, '');
-			setTimeout(searchAgainAfterWaiting, timeToWait * 1100);
-		} else if (tries < 10) {
-			// give page some time to load and try again
-			setTimeout(checkIfSearchResultsLoaded, 500);
-		}
+	debugger;
+	// jeśli nie jestem na urlu usuniętego wyszkiwania google ani wyszukiwania forumowego
+	if (!contains(window.location.href, 'app=googlecse') && !contains(window.location.href, 'do=search')){
+		return;
+	}
+	var notEmptySearchResults = document.querySelector('#middle_column .ipsFilterbar') != null;
+	if (notEmptySearchResults) {
+		return;
+	}
+	// check if antiflood search protection is present
+	var protection = document.querySelector('#middle_column p.message.error');
+	if (protection != null && protection.textContent.indexOf('odczekać') != -1) {
+		var timeToWait = protection.textContent.replace(/\D/g, '');
+		setTimeout(searchAgainAfterWaiting, timeToWait * 1100);
 	} else {
-		continueExecution();
+		var regex = /(\d\d\d.?\d\d\d.?\d\d\d)/;
+		var number = getValueUsingRegex(window.location.href, regex)
+		document.querySelector('#main_search').value = '"' + number + '"';
+		document.querySelector('#search-box').submit();
 	}
 }
 
-function continueExecution() {
-	// is message "Brak wyników" visible
-	var noResults = document.querySelector("div.gs-snippet");
-	// alert('noResults ' + noResults);
-	if (noResults != null) {
-		addSearchForumButton();
-	}
+function contains(haystack, needle) {
+	return haystack.indexOf(needle)>-1;
 }
 
-function prepareSearch() {
-	var number = document.querySelector("#gsc-i-id1").value;
-	document.querySelector('#main_search').value = number;
-	document.querySelector('#search_options').click();
-	document.querySelector('label[title="Forum"]').click();
-}
-
-function doSearch() {
-	document.querySelector('#search-box').submit();
-}
-function updateCounterAndAutoclickButton(searchButton, counter, time) {
-	if (time > 1) {
-		counter.text = time - 1;
-		setTimeout(updateCounterAndAutoclickButton, 1000, searchButton, counter, time - 1);
-	} else {
-		searchButton.click();
-	}
-}
-
-// when no results adds button for manual search
-function addSearchForumButton() {
-	// alert('adding button');
-	var destinationElement = document.querySelector(".gsc-resultsRoot");
-	var searchButton = document.createElement("a");
-	searchButton.setAttribute('href', '#');
-	prepareSearch();
-	searchButton.addEventListener("click", doSearch);
-	searchButton.setAttribute('style', ' margin-left:20px; background-color: white;  color: black;  text-color: black;  border: 2px solid red;  padding: 1px 2px;  text-align: center;  text-decoration: none;  display: inline-block;');
-	searchButton.text = ' szukaj bezpośrednio na Forum';
-	insertBefore(destinationElement, searchButton);
-
-	// add countdown to autosearch
-	if (autosearch == 1) {
-		var time = 4;
-		var counter = document.createElement("a");
-		counter.text = time;
-		counter.setAttribute('style', ' margin-left:10px;');
-		insertAfter(searchButton, counter);
-		updateCounterAndAutoclickButton(searchButton, counter, time);
-	}
+function getValueUsingRegex(haystack, regex) {
+	let match = regex.exec(haystack);
+	return match[1];
 }
 
 //--------------- FILTERING LINKS FOR R
