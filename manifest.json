@@ -1,9 +1,9 @@
 {
-  "version": "1.25",
+  "version": "1.26",
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "pl",
-  "manifest_version": 2,
+  "manifest_version": 3,
 
   "icons": { "16": "icon16.png",
              "48": "icon48.png",
@@ -22,7 +22,7 @@
 	  "css": ["style.css"]
     }
   ],
-  "browser_action": {
+  "action": {
     "default_icon": "icon128.png",
     "default_popup": "popup.html"
   },
@@ -30,5 +30,12 @@
   "author": "ffrr33aakk",
   "permissions": [
     "storage"
+  ],
+  "host_permissions": [
+		"*://www.g.com.pl/forum/index.php?app=googlecse*",
+		"*://www.g.com.pl/forum/index.php?app=core*",
+		"*://www.hm.pl/*",
+		"*://em.pl/pokaz/*",
+		"*://esc.pl/anons/*.html"
   ]
 }
