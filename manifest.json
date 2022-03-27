@@ -1,5 +1,5 @@
 {
-  "version": "1.26",
+  "version": "1.27",
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "pl",
@@ -16,7 +16,8 @@
 		"*://www.g.com.pl/forum/index.php?app=core*",
 		"*://www.hm.pl/*",
 		"*://em.pl/pokaz/*",
-		"*://esc.pl/anons/*.html"
+		"*://esc.pl/anons/*.html",
+		"*://www.r.sx/listing/*/"
 	  ],
 	  "js": ["content.js"],
 	  "css": ["style.css"]
@@ -36,6 +37,7 @@
 		"*://www.g.com.pl/forum/index.php?app=core*",
 		"*://www.hm.pl/*",
 		"*://em.pl/pokaz/*",
-		"*://esc.pl/anons/*.html"
+		"*://esc.pl/anons/*.html",
+		"*://www.r.sx/listing/*/"
   ]
 }

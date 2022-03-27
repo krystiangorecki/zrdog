@@ -1,6 +1,6 @@
 // 'use strict';
 
-var r = decodeURIComponent('%72%6f%6b%73%61%2e%70%6c');
+var r = decodeURIComponent('%77%77%77%2e%72%6f%6b%73%61%2e%73%78');
 var g = decodeURIComponent('%77%77%77%2e%67%61%72%73%6f%6e%69%65%72%61%2e%63%6f%6d%2e%70%6c');
 var hm = decodeURIComponent('%77%77%77%2e%68%6f%74%6d%61%78%2e%70%6c');
 var e = decodeURIComponent('%65%72%6f%6d%65%74%72%2e%70%6c');
@@ -76,22 +76,30 @@ function executeEscdoEsc() {
 
 // adds g link on r
 function executeRdoG() {
-	// get element with phone number
-	var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
-	// get number text from element
-	var phone = phoneElement.textContent.trim();
-	//alert(phone);
+	var lis = document.querySelectorAll('.cts-main-column ul.extra-details>li');
+	for (var i =0 ; i<lis.length ; i++) {
+		if(contains(lis[i].querySelector('.item-attr').innerText, 'Telefon')) {
+			var phoneElement = lis[i];
+			var phone = lis[i].querySelector('.item-property').innerText.trim();
+			debugger;
+			phone = phone.split(' ').join('-');
+			if (phone.length == 9) {
+				phone = phone.substring(0,3) + '-' + phone.substring(3,6) + '-' + phone.substring(6,9);
+			}
+			break;
+		}
+	}
 
 	// create URL to search for a phone number with dashes
-	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone.split(' ').join('-') + '%22';
+	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone + '%22';
 
 	var newLink = document.createElement("span");
 	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;g&nbsp;</a>';
 
 	// get element "Kontakt"...
-	var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
+	//var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
 	// ... insert new link after it
-	insertAfter(contactElement, newLink);
+	insertAfter(phoneElement, newLink);
 }
 
 // adds g link on r by ad number
@@ -183,23 +191,25 @@ function executeRdoR() {
 }
 
 // adds link to e on r to allow searching for reviews for the same phone number
-function executeRdoE() {
-	chrome.storage.sync.get(['showElink'], function (result) {
-		// alert('showElink is ' + result.showElink);
-		var showElink = result.showElink;
-		if (showElink) {
-			var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
-			var phone = phoneElement.textContent.trim();
-			//alert(phone);
-			var url = 'https://' + e + '/szukaj?q=%22' + phone.split(' ').join('-') + "%22";
-			var newLink = document.createElement("span");
-			newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" > e </a>';
-			// get element "Kontakt"...
-			var contactElement = document.querySelector('#anons_details span.dane_anonsu_tytul');
-			// ... insert new link after it
-			insertAfter(contactElement, newLink);
+function executeRdoEsc() {
+	var lis = document.querySelectorAll('.cts-main-column ul.extra-details>li');
+	for (var i =0 ; i<lis.length ; i++) {
+		if(contains(lis[i].querySelector('.item-attr').innerText, 'Telefon')) {
+			var phoneElement = lis[i];
+			var phone = lis[i].querySelector('.item-property').innerText.trim();
+			phone = phone.split(' ').join('-');
+			if (phone.length == 9) {
+				phone = phone.substring(0,3) + '-' + phone.substring(3,6) + '-' + phone.substring(6,9);
+			}
+			break;
 		}
-	});
+	}
+
+	var url = 'https://' + esc + '/szukaj/?q=' + phone;
+	var newLink = document.createElement("span");
+	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;e&nbsp;</a>';
+
+	insertAfter(phoneElement, newLink);
 }
 
 // adds links to r on o
@@ -243,40 +253,14 @@ function executeEdoR() {
 	}
 }
 
-// adds buttons on r and o
-function addButtonsForRiO() {
-	if (window.location.hostname.indexOf(r) != -1) {
-		// add link to r (other ads for the same number)
-		executeRdoR();
-		// add link to e
-		executeRdoE();
-		// add link to g by ad number
-		executeRdoGByAdNumber();
-		// add link to g
-		executeRdoG();
-	} else if (window.location.hostname.indexOf(hm) != -1) {
-		// add links only if not on main page
-		// required because of URL scheme, everything has URL like /abc
-		if(!document.documentURI.endsWith('.pl/#')){
-			// I'm on hm
-			// add link to g
-			executeHMdoG();
-			// add link to r
-			executeHMdoR();
-		}
-	} else if (window.location.hostname.indexOf(e) != -1) {
-		// I'm on e
-		// add link to r
-		executeEdoR();
-	} else if (window.location.hostname.indexOf(o) != -1) {
-		// I'm on o
-		// add link to e
-		executeOdoEsc();
-		// add link to r
-		executeOdoR();
-		// add link to g
-		executeOdoG();
-	}
+// adds buttons on r
+function addButtonsForR() {
+	// add link to r (other ads for the same number)
+	//executeRdoR();
+	// add link to e
+	executeRdoEsc();
+	// add link to g
+	executeRdoG();
 	applyDynamicTarget();
 }
 
@@ -293,7 +277,6 @@ function searchAgainAfterWaiting() {
 }
 
 function checkIfSearchResultsLoaded() {
-	debugger;
 	// jeśli nie jestem na urlu usuniętego wyszkiwania google ani wyszukiwania forumowego
 	if (!contains(window.location.href, 'app=googlecse') && !contains(window.location.href, 'do=search')){
 		return;
@@ -308,9 +291,14 @@ function checkIfSearchResultsLoaded() {
 		var timeToWait = protection.textContent.replace(/\D/g, '');
 		setTimeout(searchAgainAfterWaiting, timeToWait * 1100);
 	} else {
-		var regex = /(\d\d\d.?\d\d\d.?\d\d\d)/;
-		var number = getValueUsingRegex(window.location.href, regex)
-		document.querySelector('#main_search').value = '"' + number + '"';
+		var regex = /(\d\d\d[^0-9]?\d\d\d[^0-9]?\d\d\d)/;
+		var sanitizedHref = window.location.href.replaceAll('%22','');
+		var phone = getValueUsingRegex(sanitizedHref, regex)
+		phone = phone.split(' ').join('-');
+		if (phone.length == 9) {
+			phone = phone.substring(0,3) + '-' + phone.substring(3,6) + '-' + phone.substring(6,9);
+		}
+		document.querySelector('#main_search').value = '"' + phone + '"';
 		document.querySelector('#search-box').submit();
 	}
 }
@@ -509,7 +497,10 @@ var observeDOM = (function() {
 
 function revealPhoneNumber() {
 	attachNumberRevealObserver();
-	document.querySelector('div.content-info a[data-show-phone]').click();
+	var phoneElement = document.querySelector('div.content-info a[data-show-phone]');
+	if (phoneElement !=null) {
+		phoneElement.click();
+	}
 }
 
 function executeEsc() {
@@ -530,7 +521,7 @@ function executeMain() {
 		checkIfSearchResultsLoaded();
 	} else if (window.location.hostname.indexOf(r) != -1) {
 		// adds buttons on r
-		addButtonsForRiO();
+		addButtonsForR();
 		// add buttons for internal r search
 		/*
 		addCityLink();
@@ -539,9 +530,6 @@ function executeMain() {
 		addHeightLink();
 		addPriceLink();
 		*/
-	} else if (window.location.hostname.indexOf(o) != -1) {
-		// adds buttons on o and hm
-		addButtonsForRiO();
 	}
 }
 
