@@ -9,6 +9,9 @@ var esc = decodeURIComponent('%65%73%63%6f%72%74%2e%70%6c');
 
 var autosearch = 1;
 
+var noteLoaded = false;
+var numberRevealed = false;
+
 function insertAfter(referenceNode, newNode) {
 	referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
@@ -81,7 +84,6 @@ function executeRdoG() {
 		if(contains(lis[i].querySelector('.item-attr').innerText, 'Telefon')) {
 			var phoneElement = lis[i];
 			var phone = lis[i].querySelector('.item-property').innerText.trim();
-			debugger;
 			phone = phone.split(' ').join('-');
 			if (phone.length == 9) {
 				phone = phone.substring(0,3) + '-' + phone.substring(3,6) + '-' + phone.substring(6,9);
@@ -471,8 +473,33 @@ function attachNumberRevealObserver() {
 		observeDOM( obj, function(m){
 			var addedNodes = [];
 			m.forEach(record => record.addedNodes.length & addedNodes.push(...record.addedNodes))
-			if (addedNodes.length>0){
+			if (addedNodes.length > 0) {
+				numberRevealed = true;
+				console.log("NUMBER REVEALED");
+				addNumberToNoteIfPossible();
 				executeEsc();
+			}
+		});
+	} );
+}
+
+//--------------
+// monitoring note loaded
+
+function attachNoteLoadedObserver() {
+	var containersToMonitor = document.querySelectorAll('div.content-info-wrapper.-left');
+	containersToMonitor.forEach(obj => {
+		observeDOM( obj, function(m){
+			var addedNodes = [];
+			m.forEach(record => record.addedNodes.length & addedNodes.push(...record.addedNodes))
+			if (addedNodes.length > 0){
+				for (var i = 0 ; i<addedNodes.length ; i++) {
+					if (contains(addedNodes[i].tagName, "FORM")) {
+						noteLoaded = true;
+						console.log("NOTE LOADED");
+						addNumberToNoteIfPossible();
+					}
+				}
 			}
 		});
 	} );
@@ -508,9 +535,105 @@ function executeEsc() {
 	executeEscdoG();
 }
 
+//--------------
+// showing note
+
+function showNote() {
+	var hasExistingNote = document.querySelector('section.anons-sec .content-actions-col span.icon-holder.icon-green');
+	if (hasExistingNote != undefined) {
+		attachNoteLoadedObserver();
+		var id = getAdId();
+		var xhr = new XMLHttpRequest();
+		var noteURL = "https://escort.pl/action.php?action=addUserNote&id=" + id;
+		xhr.open("GET", noteURL, true);
+		xhr.onload = function (e) {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					var el = document.createElement('html');
+					el.innerHTML = xhr.responseText;
+					var form = el.querySelector('form');
+					form.action = noteURL;
+					var textarea = el.querySelector( 'textarea' );
+					textarea.style='color:white ; width:100% ; line-height: 1.1; margin-top: 15px';
+					textarea.id='';
+					var destinationElement = document.querySelector('div.content-info-col');
+					insertAfter(destinationElement, form);
+					textarea.style.height = "";
+					textarea.style.height = textarea.scrollHeight + 5 + "px";
+					ajaxifyNoteForm(form);
+					var contentChanged = fixNewLineCharaters(textarea);
+					if (contentChanged) {
+						form.submit();
+					}
+				} else {
+					console.error(xhr.statusText);
+				}
+			}
+		};
+		xhr.onerror = function (e) {
+			console.error(xhr.statusText);
+		};
+		xhr.send(null);
+	}
+
+}
+
+function fixNewLineCharaters(textarea) {
+	var before = textarea.value;
+	textarea.value = textarea.value.replace(/\n\s*\n/g,'\n');
+	var after = textarea.value;
+	return before != after;
+}
+
+function ajaxifyNoteForm(form){
+	form.target="invisibleIframe";
+	var newInvisibleIframe = document.createElement("iframe");
+	newInvisibleIframe.id = 'invisibleIframe';
+	newInvisibleIframe.name = 'invisibleIframe';
+	newInvisibleIframe.style = 'height:15px';
+	insertAfter(form, newInvisibleIframe);
+}
+
+function getAdId(){
+	var result;
+	var regex = /(\d+).html/;
+	let match = regex.exec(window.location.href);
+	if (match != undefined) {
+		result = parseInt(match[1]);
+		return result;
+	}
+	return undefined;
+}
+
+// -------------------------- 
+// ADDING NUMBERS TO NOTE
+function addNumberToNoteIfPossible() {
+	console.log("addNumberToNoteIfPossible? " + noteLoaded + " " + numberRevealed);
+	if (noteLoaded && numberRevealed) {
+		addNumberToNote();
+	}
+}
+
+function addNumberToNote() {
+	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
+	var phone = phoneElement.textContent.trim();
+	if (phone.indexOf(')') > -1) {
+		phone = phone.substring(phone.indexOf(')')+1);
+	}
+
+	var textarea = document.querySelector('textarea[name=note]');
+	var note = textarea.value;
+	if (!contains(note, " ; " + phone) && !contains(note, phone + " ; " )) {
+		textarea.value = phone + " ; " + note;
+	}
+}
+
+// --------------------------
+
 function executeMain() {
 	if (window.location.hostname.indexOf(esc) != -1) {
 		revealPhoneNumber();
+		showNote();
 		// internal e search
 		addAgeLink();
 		addWeightLink();
