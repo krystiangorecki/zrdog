@@ -494,6 +494,11 @@ function attachNoteLoadedObserver() {
 			m.forEach(record => record.addedNodes.length & addedNodes.push(...record.addedNodes))
 			if (addedNodes.length > 0){
 				for (var i = 0 ; i<addedNodes.length ; i++) {
+					if (addedNodes[i].tagName==null) {
+						console.log('addedNodes= ' + addedNodes);
+						console.log('addedNodes[' + i + ']= '+addedNodes);
+						alert('NPE przy wyszukiwaniu FORM po załadowaniu notatki, sprawdzić konsolę');
+					}
 					if (contains(addedNodes[i].tagName, "FORM")) {
 						noteLoaded = true;
 						console.log("NOTE LOADED");
@@ -561,7 +566,7 @@ function showNote() {
 					textarea.style.height = "";
 					textarea.style.height = textarea.scrollHeight + 5 + "px";
 					ajaxifyNoteForm(form);
-					var contentChanged = fixNewLineCharaters(textarea);
+					var contentChanged = fixNote(textarea);
 					if (contentChanged) {
 						form.submit();
 					}
@@ -578,9 +583,9 @@ function showNote() {
 
 }
 
-function fixNewLineCharaters(textarea) {
+function fixNote(textarea) {
 	var before = textarea.value;
-	textarea.value = textarea.value.replace(/\n\s*\n/g,'\n');
+	textarea.value = textarea.value.replace(/\n\s*\n/g,'\n').replaceAll(' [g]','');
 	var after = textarea.value;
 	return before != after;
 }
@@ -627,12 +632,21 @@ function addNumberToNote() {
 		textarea.value = phone + " ; " + note;
 	}
 }
+// fix description
+
+function fixLineBreaksInDescription(){
+	var description = document.querySelector('#isoTabsContent');
+	if (description!=null) {
+		description.innerHTML = description.innerHTML.replaceAll('<br>\n<br>','<br>');
+	}
+}
 
 // --------------------------
 
 function executeMain() {
 	if (window.location.hostname.indexOf(esc) != -1) {
 		revealPhoneNumber();
+		fixLineBreaksInDescription();
 		showNote();
 		// internal e search
 		addAgeLink();
