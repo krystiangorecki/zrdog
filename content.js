@@ -495,9 +495,7 @@ function attachNoteLoadedObserver() {
 			if (addedNodes.length > 0){
 				for (var i = 0 ; i<addedNodes.length ; i++) {
 					if (addedNodes[i].tagName==null) {
-						console.log('addedNodes= ' + addedNodes);
-						console.log('addedNodes[' + i + ']= '+addedNodes);
-						alert('NPE przy wyszukiwaniu FORM po załadowaniu notatki, sprawdzić konsolę');
+						continue;
 					}
 					if (contains(addedNodes[i].tagName, "FORM")) {
 						noteLoaded = true;
@@ -630,6 +628,8 @@ function addNumberToNote() {
 	var note = textarea.value;
 	if (!contains(note, " ; " + phone) && !contains(note, phone + " ; " )) {
 		textarea.value = phone + " ; " + note;
+		var form = document.querySelector('#noteForm');
+		form.submit();
 	}
 }
 // fix description
