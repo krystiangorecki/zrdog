@@ -38,7 +38,10 @@ function executeEscdoG() {
 	// get element with phone number
 	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
 	// get number text from element
-	var phone = phoneElement.textContent.trim();
+	var phone = phoneElement.textContent;
+	phone = phone.replace('+48 ','');
+	phone = phone.trim();
+	phone = phone.replaceAll(' ','-');
 	if (phone.indexOf(')') > -1){
 		phone = phone.substring(phone.indexOf(')')+1);
 	}
@@ -60,7 +63,10 @@ function executeEscdoEsc() {
 	// get element with phone number
 	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
 	// get number text from element
-	var phone = phoneElement.textContent.trim();
+	var phone = phoneElement.textContent;
+	phone = phone.replace('+48 ','');
+	phone = phone.trim();
+	phone = phone.replaceAll(' ','-');
 	if (phone.indexOf(')') > -1){
 		phone = phone.substring(phone.indexOf(')')+1);
 	}
