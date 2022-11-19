@@ -35,41 +35,45 @@ function applyDynamicTarget() {
 
 // adds g link on esc
 function executeEscdoG() {
-	// get element with phone number
 	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
-	// get number text from element
+
+	var linkAlreadyAdded = phoneElement.parentElement.querySelector('#escdog');
+	if (linkAlreadyAdded != undefined) {
+		console.log('prevented adding duplicate link "g"');
+		return;
+	}
+
 	var phone = phoneElement.textContent;
 	phone = cleanPhone(phone);
 
-	// create URL to search for a phone number with dashes
 	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone + '%22';
 
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;g&nbsp;</a>';
+	newLink.innerHTML = ' <a id="escdog" href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;g&nbsp;</a>';
 
-	// get element "Kontakt"...
 	var contactElement = phoneElement;
-	// ... insert new link after it
 	insertAfter(contactElement, newLink);
 }
 
 // adds g link on esc
 function executeEscdoEsc() {
-	// get element with phone number
 	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
-	// get number text from element
+
+	var linkAlreadyAdded = phoneElement.parentElement.querySelector('#escdoesc');
+	if (linkAlreadyAdded != undefined) {
+		console.log('prevented adding duplicate link "e"');
+		return;
+	}
+
 	var phone = phoneElement.textContent;
 	phone = cleanPhone(phone);
 
-	// create URL to search for a phone number with dashes
 	var url = 'https://' + esc + '/szukaj/?q=' + phone;
 
 	var newLink = document.createElement("span");
-	newLink.innerHTML = ' <a href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;e&nbsp;</a>';
+	newLink.innerHTML = ' <a id="escdoesc" href="' + url + '" class="linkDoG dynamicTarget" >&nbsp;e&nbsp;</a>';
 
-	// get element "Kontakt"...
 	var contactElement = phoneElement;
-	// ... insert new link after it
 	insertAfter(contactElement, newLink);
 }
 
@@ -530,7 +534,7 @@ var observeDOM = (function() {
 function revealPhoneNumber() {
 	attachNumberRevealObserver();
 	var phoneElement = document.querySelector('div.content-info a[data-show-phone]');
-	if (phoneElement !=null) {
+	if (phoneElement != null) {
 		phoneElement.click();
 	}
 }
