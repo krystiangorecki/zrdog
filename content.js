@@ -39,12 +39,7 @@ function executeEscdoG() {
 	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
 	// get number text from element
 	var phone = phoneElement.textContent;
-	phone = phone.replace('+48 ','');
-	phone = phone.trim();
-	phone = phone.replaceAll(' ','-');
-	if (phone.indexOf(')') > -1){
-		phone = phone.substring(phone.indexOf(')')+1);
-	}
+	phone = cleanPhone(phone);
 
 	// create URL to search for a phone number with dashes
 	var url = 'http://' + g + '/forum/index.php?app=googlecse#gsc.tab=0&gsc.q=%22' + phone + '%22';
@@ -64,12 +59,7 @@ function executeEscdoEsc() {
 	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
 	// get number text from element
 	var phone = phoneElement.textContent;
-	phone = phone.replace('+48 ','');
-	phone = phone.trim();
-	phone = phone.replaceAll(' ','-');
-	if (phone.indexOf(')') > -1){
-		phone = phone.substring(phone.indexOf(')')+1);
-	}
+	phone = cleanPhone(phone);
 
 	// create URL to search for a phone number with dashes
 	var url = 'https://' + esc + '/szukaj/?q=' + phone;
@@ -136,7 +126,8 @@ function executeOdoG() {
 		phoneElement = document.querySelector('div.details > table h3');
 	}
 	// get number text from element
-	var phone = phoneElement.textContent.trim();
+	var phone = phoneElement.textContent;
+	phone = cleanPhone(phone);
 	//alert(phone);
 
 	// create URL to search for a phone number with dashes
@@ -156,7 +147,8 @@ function executeOdoEsc() {
 		phoneElement = document.querySelector('div.details > table h3');
 	}
 	// get number text from element
-	var phone = phoneElement.textContent.trim();
+	var phone = phoneElement.textContent;
+	phone = cleanPhone(phone);
 	//alert(phone);
 
 	// create URL to search for a phone number
@@ -172,7 +164,8 @@ function executeHMdoG() {
 	// get element with phone number
 	var phoneElement = document.querySelector('div.anons_telefon');
 	// get number text from element
-	var phone = phoneElement.textContent.replace('tel.','').trim();
+	var phone = phoneElement.textContent;
+	phone = cleanPhone(phone);
 	//alert(phone);
 
 	// create URL to search for a phone number with dashes
@@ -186,7 +179,8 @@ function executeHMdoG() {
 // adds links to r on r to allow searching for more ads with the same phone number
 function executeRdoR() {
 	var phoneElement = document.querySelector('#anons_details span.dane_anonsu_tel');
-	var phone = phoneElement.textContent.trim();
+	var phone = phoneElement.textContent;
+	phone = cleanPhone(phone);
 	//alert(phone);
 
 	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('').split('-').join('') + "&key_word=#show";
@@ -223,7 +217,8 @@ function executeRdoEsc() {
 // adds links to r on o
 function executeOdoR() {
 	var phoneElement = document.querySelector('div.details h3');
-	var phone = phoneElement.textContent.trim();
+	var phone = phoneElement.textContent;
+	phone = cleanPhone(phone);
 	//alert(phone);
 
 	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' +  phone.split(' ').join('').split('-').join('')  + "&key_word=#show";
@@ -236,7 +231,8 @@ function executeOdoR() {
 // adds links to r on hm
 function executeHMdoR() {
 	var phoneElement = document.querySelector('div.anons_telefon');
-	var phone = phoneElement.textContent.replace('tel.','').trim();
+	var phone = phoneElement.textContent;
+	phone = cleanPhone(phone);
 	//alert(phone);
 
 	var url = 'https://www.' + r + '/pl/szukaj/?anons_type=0&anons_state=0&anons_city_part=&cenaod=0&cenado=0&cenapoldo=0&cena15do=0&cenanocdo=0&wiekod=0&wiekdo=0&wagaod=0&wagado=0&wzrostod=0&wzrostdo=0&biustod=0&biustdo=0&jezyk=&dzien=0&hod=&hdo=&wyjazdy=0&name=&nr_tel=' + phone.split(' ').join('').split('-').join('') + "&key_word=#show";
@@ -625,10 +621,8 @@ function addNumberToNoteIfPossible() {
 
 function addNumberToNote() {
 	var phoneElement = document.querySelector('div.content-info-col.col.-info div.contact-elem.-phone');
-	var phone = phoneElement.textContent.trim();
-	if (phone.indexOf(')') > -1) {
-		phone = phone.substring(phone.indexOf(')')+1);
-	}
+	var phone = phoneElement.textContent;
+	phone = cleanPhone(phone);
 
 	var textarea = document.querySelector('textarea[name=note]');
 	var note = textarea.value;
@@ -645,6 +639,18 @@ function fixLineBreaksInDescription(){
 	if (description!=null) {
 		description.innerHTML = description.innerHTML.replaceAll('<br>\n<br>','<br>');
 	}
+}
+
+function cleanPhone(phone) {
+	debugger;
+	phone = phone.replace('+48 ','');
+	phone = phone.replace('tel.','');
+	if (phone.indexOf(')') > -1) {
+		phone = phone.substring(phone.indexOf(')')+1);
+	}
+	phone = phone.trim();
+	phone = phone.replaceAll(' ','-');
+	return phone;
 }
 
 // --------------------------
