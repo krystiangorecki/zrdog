@@ -646,7 +646,6 @@ function fixLineBreaksInDescription(){
 }
 
 function cleanPhone(phone) {
-	debugger;
 	phone = phone.replace('+48 ','');
 	phone = phone.replace('tel.','');
 	if (phone.indexOf(')') > -1) {
