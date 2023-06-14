@@ -570,10 +570,15 @@ function showNote() {
 					textarea.style.height = "";
 					textarea.style.height = textarea.scrollHeight + 5 + "px";
 					ajaxifyNoteForm(form);
+					// fix old note that has just been loaded
 					var contentChanged = fixNote(textarea);
 					if (contentChanged) {
 						form.submit();
 					}
+					// fix new note before submit
+					textarea.addEventListener("blur", (event) => {
+						fixNote(event.target);
+					});
 				} else {
 					console.error(xhr.statusText);
 				}
